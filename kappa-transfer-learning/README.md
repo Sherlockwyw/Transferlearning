@@ -8,7 +8,7 @@ dataset).
 | Model | Weights | Description |
 |-------|---------|-------------|
 | **PreTrainModel** | `PreTrainModel/kappa_base.pth` | Base model pretrained on an 872-row dataset |
-| **TransferLearningModel** | `TransferLearningModel/kappa_finetuned.pth` | Transfer-learning model fine-tuned on a 238-row dataset (recommended for prediction) |
+| **TransferLearningModel** | `TransferLearningModel/kappa_finetuned.pth` | Transfer-learning model fine-tuned on a 297-row dataset |
 
 ## Task definition
 
