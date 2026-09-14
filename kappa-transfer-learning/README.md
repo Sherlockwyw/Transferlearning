@@ -1,12 +1,9 @@
 # KappaTransferLearning
 
 Machine-learning prediction of the **thermal conductivity κ [W/(m·K)] of
-Ta-Nb-O4 compounds** from three physical features, via **transfer learning**
-(pretrain on a large dataset → freeze the first layers → fine-tune on a small
+RETaO4 compounds** from three physical features, via **transfer learning**
+(pretrain on a large dataset → freeze layers → fine-tune on a small
 dataset).
-
-**Both trained models are open-sourced** - you can use them directly for
-prediction, no training required:
 
 | Model | Weights | Description |
 |-------|---------|-------------|
@@ -128,36 +125,6 @@ weights):
 > your data live far outside the pretraining range, use `--refit-scalers`
 > (constants then saved to a sidecar `.npz`).
 
-## Performance
-
-Metrics of the released weights on the original data splits:
-
-| Model | Dataset | R² | RMSE [W/(m·K)] |
-|-------|---------|----|----------------|
-| PreTrainModel (this repo) | 872-row pretraining set | 0.8305 | 0.2149 |
-| PreTrainModel (this repo) | downstream small-data test (59 rows, before fine-tuning) | 0.5330 | 0.3769 |
-| TransferLearningModel (this repo) | 238-row fine-tuning set | 0.8854 | 0.1821 |
-| TransferLearningModel (this repo) | same 59-row test set | 0.8409 | 0.2200 |
-| base + freeze-2 fine-tune (original run reported in the paper) | same test set | **0.9017** | **0.1729** |
-| base + freeze-2 fine-tune (10-fold CV over the fine-tuning set) | 10-fold mean | 0.895 | 0.161 |
-
-> Note: the 0.9017 test score comes from the original training run reported in
-> the paper; the released `kappa_finetuned.pth` is a later re-run from a
-> re-trained base (0.8409 on the same test set). Re-running the fine-tuning
-> recipe reproduces comparable performance (10-fold CV mean R² 0.895 / RMSE
-> 0.161).
-
-## Verify the release
-
-```bash
-python verify.py
-# optionally, if you have the original thesis directory:
-python verify.py --orig-root "path/to/original_thesis_dir"
-```
-
-Checks: both weights strict-load, the fine-tuned model keeps the base weights
-in its first two Linear layers (transfer-learning signature), and predictions
-are physically plausible.
 
 ## Repository structure
 
@@ -182,12 +149,6 @@ kappa-transfer-learning/
 ├── LICENSE                        # MIT
 └── README.md
 ```
-
-## Data & citation
-
-The pretraining and fine-tuning datasets (872 / 238 / 59 rows) are not
-included; see the associated paper. If you use the released weights or the
-recipe, please cite the associated paper.
 
 ## License
 
